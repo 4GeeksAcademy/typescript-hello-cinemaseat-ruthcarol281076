@@ -1,21 +1,38 @@
+/** Valor binario de un asiento: 0 disponible y 1 reservado. */
 export type Seat = 0 | 1;
+/** Asientos de una fila, en orden de columna. */
 export type SeatRow = ReadonlyArray<Seat>;
+/** Filas de la sala, en orden ascendente. */
 export type SeatMatrix = ReadonlyArray<SeatRow>;
+/** Conteos en el orden [ocupados, disponibles]. */
 export type SeatCounts = readonly [occupied: number, available: number];
+/** Coordenadas de asiento basadas en filas y columnas desde 1. */
 export type SeatPosition = readonly [rowNumber: number, columnNumber: number];
+/** Primer y segundo asiento disponible de un par horizontal. */
 export type AdjacentSeatPair = readonly [first: SeatPosition, second: SeatPosition];
 
+/** Cantidad de filas de la sala. */
 export const ROW_COUNT = 8;
+/** Cantidad de asientos por fila. */
 export const COLUMN_COUNT = 10;
 
+/** Resultado posible de intentar reservar un asiento. */
 export type ReservationStatus = "reserved" | "occupied" | "invalid";
 
+/** Crea una matriz de 8 por 10 con todos los asientos disponibles. */
 export function createEmptySeatMatrix(): SeatMatrix {
   return Array.from({ length: ROW_COUNT }, () =>
     Array.from({ length: COLUMN_COUNT }, (): Seat => 0)
   );
 }
 
+/**
+ * Reserva un asiento sin modificar la matriz recibida.
+ * @param matrix Estado actual de la sala.
+ * @param rowNumber Fila basada en 1.
+ * @param columnNumber Asiento dentro de la fila, basado en 1.
+ * @returns La matriz resultante y el estado de la reserva.
+ */
 export function reserveSeat(
   matrix: SeatMatrix,
   rowNumber: number,
@@ -50,6 +67,7 @@ export function reserveSeat(
   return [updatedMatrix, "reserved"];
 }
 
+/** Cuenta los asientos ocupados y disponibles de la matriz. */
 export function countSeats(matrix: SeatMatrix): SeatCounts {
   const seats = matrix.flat();
   const occupiedCount = seats.filter((seat) => seat === 1).length;
@@ -57,6 +75,7 @@ export function countSeats(matrix: SeatMatrix): SeatCounts {
   return [occupiedCount, seats.length - occupiedCount];
 }
 
+/** Busca el primer par libre horizontal, recorriendo la sala por filas. */
 export function findFirstAdjacentAvailableSeats(
   matrix: SeatMatrix
 ): AdjacentSeatPair | null {

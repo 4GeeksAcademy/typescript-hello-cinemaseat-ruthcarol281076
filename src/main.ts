@@ -1,3 +1,4 @@
+/** Ejecuta escenarios de demostración para mapas y operaciones de reserva. */
 import {
   COLUMN_COUNT,
   countSeats,

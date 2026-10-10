@@ -1,3 +1,4 @@
+/** Interpreta los comandos de consola y actualiza la matriz de reservas. */
 import {
   countSeats,
   createEmptySeatMatrix,
@@ -6,12 +7,16 @@ import {
 } from "./seatManager";
 import { formatSeatMap } from "./seatMap";
 
+/** Indica si la entrada solicita terminar la sesión interactiva. */
 function isExitCommand(input: string): boolean {
   return input.trim().toLowerCase() === "salir";
 }
 
+/** Ejecuta la sesión de reservas y atiende las consultas disponibles sobre la sala. */
 export async function runInteractiveReservations(
+  /** Solicita una entrada al usuario y devuelve el texto ingresado. */
   ask: (prompt: string) => Promise<string>,
+  /** Muestra un mensaje al usuario. */
   write: (message: string) => void
 ): Promise<void> {
   let room = createEmptySeatMatrix();

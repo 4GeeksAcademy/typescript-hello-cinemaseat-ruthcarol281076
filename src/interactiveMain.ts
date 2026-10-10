@@ -1,3 +1,4 @@
+/** Conecta la sesión de reservas con la entrada y salida estándar del proceso. */
 import { stdin, stdout } from "node:process";
 import { createInterface } from "node:readline/promises";
 import { runInteractiveReservations } from "./interactiveReservations";

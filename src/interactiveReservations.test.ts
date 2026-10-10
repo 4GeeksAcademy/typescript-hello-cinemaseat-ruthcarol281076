@@ -1,3 +1,4 @@
+/** Verifica los comandos interactivos y los mapas emitidos durante la sesión. */
 import { describe, expect, it } from "vitest";
 import { createEmptySeatMatrix, reserveSeat } from "./seatManager";
 import { runInteractiveReservations } from "./interactiveReservations";

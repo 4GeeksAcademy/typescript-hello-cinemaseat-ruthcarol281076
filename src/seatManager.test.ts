@@ -1,3 +1,4 @@
+/** Prueba inicialización, reservas, conteos y búsqueda de asientos contiguos. */
 import { describe, expect, it } from "vitest";
 import {
   COLUMN_COUNT,
@@ -11,6 +12,7 @@ import {
   SeatPosition
 } from "./seatManager";
 
+/** Construye una matriz donde solo las posiciones indicadas están disponibles. */
 function createMatrixWithAvailableSeats(
   availablePositions: ReadonlyArray<SeatPosition>
 ): SeatMatrix {

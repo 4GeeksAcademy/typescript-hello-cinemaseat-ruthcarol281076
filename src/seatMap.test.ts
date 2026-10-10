@@ -1,3 +1,4 @@
+/** Verifica las etiquetas, coordenadas y marcadores del mapa de asientos. */
 import { describe, expect, it } from "vitest";
 import { createEmptySeatMatrix, reserveSeat, ROW_COUNT } from "./seatManager";
 import { formatSeatMap } from "./seatMap";

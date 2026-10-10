@@ -1,5 +1,6 @@
 import { COLUMN_COUNT, SeatMatrix } from "./seatManager";
 
+/** Formatea la matriz como mapa etiquetado con L para libre y X para ocupado. */
 export function formatSeatMap(matrix: SeatMatrix): string {
   const columnLabels = Array.from({ length: COLUMN_COUNT }, (_, columnIndex) =>
     String(columnIndex + 1).padStart(2, " ")
