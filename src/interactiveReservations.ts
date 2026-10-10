@@ -1,5 +1,7 @@
 import {
+  countSeats,
   createEmptySeatMatrix,
+  findFirstAdjacentAvailableSeats,
   reserveSeat
 } from "./seatManager";
 import { formatSeatMap } from "./seatMap";
@@ -18,9 +20,26 @@ export async function runInteractiveReservations(
     write("\n=== Mapa antes de la reserva ===");
     write(formatSeatMap(room));
 
-    const rowInput = await ask("Fila (1-8, o 'salir' para terminar): ");
+    const rowInput = await ask(
+      "Fila (1-8), 'buscar2AsientosContiguos' o 'salir': "
+    );
     if (isExitCommand(rowInput)) {
       return;
+    }
+
+    if (rowInput.trim().toLowerCase() === "buscar2asientoscontiguos") {
+      const [, availableSeats] = countSeats(room);
+      if (availableSeats > 0) {
+        const adjacentPair = findFirstAdjacentAvailableSeats(room);
+        if (adjacentPair) {
+          write(
+            `Par contiguo disponible: fila ${adjacentPair[0][0]}, asientos ${adjacentPair[0][1]} y ${adjacentPair[1][1]}.`
+          );
+        } else {
+          write("No hay dos asientos contiguos disponibles.");
+        }
+      }
+      continue;
     }
 
     const columnInput = await ask("Asiento (1-10, o 'salir' para terminar): ");
@@ -38,10 +57,18 @@ export async function runInteractiveReservations(
     } else if (status === "occupied") {
       write("Reserva rechazada: el asiento ya esta ocupado.");
     } else {
-      write("Reserva rechazada: las coordenadas no son validas.");
+      write(
+        "La fila debe estar entre 1 y 8 y el asiento entre 1 y 10. Intentalo de nuevo."
+      );
     }
 
     write("\n=== Mapa después de la reserva ===");
     write(formatSeatMap(room));
+
+    const [, availableSeats] = countSeats(room);
+    if (availableSeats === 0) {
+      write("La sala esta completa; no quedan asientos disponibles.");
+      return;
+    }
   }
 }

@@ -50,7 +50,7 @@ describe("runInteractiveReservations", () => {
     expect(output).toEqual([
       "\n=== Mapa antes de la reserva ===",
       emptyMap,
-      "Reserva rechazada: las coordenadas no son validas.",
+      "La fila debe estar entre 1 y 8 y el asiento entre 1 y 10. Intentalo de nuevo.",
       "\n=== Mapa después de la reserva ===",
       emptyMap,
       "\n=== Mapa antes de la reserva ===",
