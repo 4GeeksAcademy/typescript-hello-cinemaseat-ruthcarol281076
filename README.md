@@ -1,4 +1,4 @@
-# Hello World with Typescript
+# CinemaSeat | Cinema Seat Manager
 
 <!-- hide -->
 > By [@ehiber](https://github.com/ehiber) and contributors at [4Geeks Academy](https://4geeksacademy.com/)
@@ -8,123 +8,117 @@
 
 *Estas instrucciones estan disponibles en [espanol](./README.es.md).*
 <!-- endhide -->
-Start coding a TypeScript/HTML/CSS website in 30 seconds by opening this template using 4Geeks' [One-Click Coding](https://s.4geeks.com/start?repo=https://github.com/4GeeksAcademy/typescript-hello) or locally on your computer.
+CinemaSeat is a web application for viewing and reserving seats in an 8-row, 10-seat-per-row cinema. It supports immediate reservations by clicking a free seat, finding the first available horizontal adjacent pair, and viewing live room counts and status. The original console workflows remain available.
 
-## Before you begin
+## Requirements
 
-Install the packages by typing:
+- Node.js 20 or newer
+- npm
+
+## Installation
+
+Clone or download the project, change to its directory, and install dependencies:
+
 
 ```bash
 npm install
 ```
 
-## How do I run my website to see live changes?
+## Run the web application
 
-Type on the command line:
-
-```bash
-npm run start
-```
-
-Then open your local URL in the browser (usually `http://localhost:5173`).
-
-## How do I run this in GitHub Codespaces?
-
-Run the same development server:
+Start the development server:
 
 ```bash
 npm run start
 ```
 
-Vite is configured to listen on `0.0.0.0`, so Codespaces can detect and forward port `5173` automatically.
+Open `http://localhost:5173` in a browser. Vite refreshes the page as you save changes.
 
-## How do I run only the TypeScript check?
+## Usage
 
-Use this command to validate only TypeScript without starting Vite:
+- The map labels rows 1 through 8 and columns 1 through 10.
+- Click a free seat to reserve it immediately. Clicking an occupied seat reports the rejection and leaves the matrix unchanged.
+- Select **Find first pair** to locate the first free horizontal pair in one row. The seats are highlighted in orange; the temporary highlight is cleared by the next seat click or search.
+- The status and message panels show seat locations, occupied and available counts, and one of four room states: empty, partially occupied, nearly full, or full. “Nearly full” means seats remain available but no adjacent pair exists.
+- Reservations are stored in `sessionStorage` and survive reloads within the current tab session. They are not synchronized between users or saved to a server.
+
+Free seats are dark gray, occupied seats are light gray with a watermark `X`, and the found pair is orange. The interface adapts the map and controls to mobile screens. VIP categories and pricing are out of scope.
+
+## Run in GitHub Codespaces
+
+Use the same development server:
 
 ```bash
-npm run typecheck
+npm run start
 ```
 
-## How do I run Cinema Seat Manager from the terminal?
+Vite listens on `0.0.0.0`, so Codespaces can detect and forward port `5173` automatically.
 
-### Run the original scenario demo
+## Use CinemaSeat from the console
 
-Run the predefined empty, partially occupied, nearly full, and full-room scenarios:
+The web interface does not replace the console commands.
+
+### Scenario demo
+
+Show empty, partially occupied, nearly full, and full-room scenarios:
 
 ```bash
 npm run console
 ```
 
-### Run the interactive console
+### Interactive console
 
-Start an interactive reservation session:
+Start an interactive reservation session in the terminal:
 
 ```bash
 npm run console:interactive
 ```
 
-Enter a row from 1 to 8 and a seat from 1 to 10. The room map is displayed before and after each reservation attempt. You can also enter `status` to see the occupied and available seat counts, `buscar2AsientosContiguos` to find the first available horizontal pair, or `salir` to end the session.
+Enter a row from 1 to 8 and a seat from 1 to 10. Enter `status` to see the counts, `buscar2AsientosContiguos` to find the first available horizontal pair, or `salir` to end the session.
 
-### Run the automated tests
+## Tests and build
 
-Run the original unit tests with:
+Run the automated tests:
 
 ```bash
 npm test -- --run
 ```
 
-## Where do I write my code?
+Type-check the project:
 
-It depends on the language:
+```bash
+npm run typecheck
+```
 
-- `./src/main.ts` for TypeScript logic.
-- `./src/style.css` for styles (Tailwind CSS v4 is already imported).
-- `./index.html` for the HTML shell.
+Build and preview the production version locally:
 
-You can add more files as needed, just make sure to import them from `main.ts`.
+```bash
+npm run build
+npm run preview
+```
 
-Note: if you can see the "Hello Rigo" card and the message "If you can see this, Tailwind is working.", Tailwind is configured correctly.
+## Main files
+
+- `index.html` and `src/webMain.ts`: web page and application entry point.
+- `src/webApp.ts`: map interactions and UI updates.
+- `src/seatManager.ts`: seat matrix and domain operations shared by the web app and console.
+- `src/webReservations.ts`: room status and session storage.
+- `src/webSeatMap.ts`: seat rendering and accessible labels.
+- `src/style.css`: dark theme and responsive styles; Tailwind CSS v4 is configured.
 
 ## Troubleshooting
 
-### I don't see my changes...
+### Changes do not appear
 
-Every time you change any file inside `./src`, the website refreshes automatically (hot reload).
+Changes in `src/` should appear automatically. If they do not, refresh while clearing the cache:
 
-If changes still don't appear, refresh clearing cache:
-
-- Mac: `Cmd + Shift + R`
+- macOS: `Cmd + Shift + R`
 - Windows/Linux: `Ctrl + Shift + R`
-
-## How do I include more images in my project?
-
-Add them inside `./public` and reference them in HTML using `/your-image-name.ext`.
-
-Example:
-
-```html
-<img src="/rigo-baby.jpg" alt="Rigo" />
-```
-
-## How do I include more TypeScript files?
-
-Add files into `./src` and import them from `main.ts`.
-
-Example:
-
-```ts
-import { myVar } from "./file2";
-```
-
-## How do I publish the website?
-
-This boilerplate is compatible with Vercel in one step.
 
 <!-- hide -->
 ## Contributors
 
-This template was built as part of the [4Geeks Academy Coding Bootcamp](https://4geeksacademy.com/us/coding-bootcamp) by [ehiber](https://github.com/ehiber) and contributors. Find out more about our [AI Engineering Course](https://4geeksacademy.com/us/coding-bootcamps/ai-engineering), [Full Stack Developer Course](https://4geeksacademy.com/us/coding-bootcamps/part-time-full-stack-developer), and [Data Science Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning).
+This project started from a template built as part of the [4Geeks Academy Coding Bootcamp](https://4geeksacademy.com/us/coding-bootcamp) by [ehiber](https://github.com/ehiber) and contributors. Find out more about our [AI Engineering Course](https://4geeksacademy.com/us/coding-bootcamps/ai-engineering), [Full Stack Developer Course](https://4geeksacademy.com/us/coding-bootcamps/part-time-full-stack-developer), and [Data Science Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning).
 
 You can find other templates and resources like this at the [school's GitHub page](https://github.com/4geeksacademy/).
 <!-- endhide -->

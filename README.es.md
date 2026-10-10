@@ -1,4 +1,4 @@
-# Hola Mundo con Typescript
+# CinemaSeat | Gestor de asientos de cine
 
 <!-- hide -->
 > Por [@ehiber](https://github.com/ehiber) y contribuidores de [4Geeks Academy](https://4geeksacademy.com/)
@@ -9,121 +9,114 @@
 *These instructions are available in [english](./README.md).*
 <!-- endhide -->
 
-Empieza a programar un sitio con TypeScript/HTML/CSS en 30 segundos abriendo esta plantilla con [One-Click Coding](https://s.4geeks.com/start?repo=https://github.com/4GeeksAcademy/typescript-hello) de 4Geeks o en tu computadora local.
+CinemaSeat es una aplicación web para consultar y reservar asientos en una sala de 8 filas por 10 columnas. Permite reservar con un clic, encontrar el primer par horizontal contiguo disponible y consultar en tiempo real el conteo y estado de la sala. La experiencia de consola original también sigue disponible.
 
-## Antes de empezar
+## Requisitos
 
-Instala los paquetes escribiendo:
+- Node.js 20 o posterior
+- npm
+
+## Instalación
+
+Clona o descarga el proyecto y, desde su directorio, instala las dependencias:
 
 ```bash
 npm install
 ```
 
-## Como ejecuto mi sitio para ver cambios en vivo?
+## Iniciar la aplicación web
 
-Escribe en la linea de comandos:
-
-```bash
-npm run start
-```
-
-Luego abre la URL local en el navegador (normalmente `http://localhost:5173`).
-
-## Como ejecuto esto en GitHub Codespaces?
-
-Usa el mismo servidor de desarrollo:
+Inicia el servidor de desarrollo:
 
 ```bash
 npm run start
 ```
 
-Vite esta configurado para escuchar en `0.0.0.0`, asi que Codespaces puede detectar y redirigir automaticamente el puerto `5173`.
+Abre `http://localhost:5173` en el navegador. Vite actualiza la página automáticamente al guardar cambios.
 
-## Como ejecuto solo la validacion de TypeScript?
+## Uso
 
-Usa este comando para validar solo TypeScript sin iniciar Vite:
+- El mapa muestra las filas y columnas numeradas del 1 al 8 y del 1 al 10.
+- Haz clic en un asiento libre para reservarlo inmediatamente. Si ya está ocupado, la reserva se rechaza y la matriz no cambia.
+- Usa **Buscar primer par** para localizar el primer par libre contiguo en una misma fila. Los asientos encontrados se resaltan en naranja; el resaltado temporal se elimina con el siguiente clic o búsqueda.
+- Los paneles de estado y mensajes muestran las ubicaciones, el conteo de asientos libres y ocupados y el estado actual: sala vacía, parcialmente ocupada, casi llena o completa. “Casi llena” significa que quedan asientos libres, pero no hay pares contiguos.
+- Las reservas se guardan en `sessionStorage` y se conservan al recargar durante la sesión de esa pestaña. No se sincronizan entre personas ni se guardan en un servidor.
+
+Los asientos libres son gris oscuro, los ocupados gris claro con una `X` de marca de agua y el par encontrado es naranja. La interfaz adapta el mapa y sus controles a pantallas móviles. No incluye categorías VIP ni precios.
+
+## Usar en GitHub Codespaces
+
+Ejecuta el mismo servidor:
 
 ```bash
-npm run typecheck
+npm run start
 ```
 
-## Como ejecuto Cinema Seat Manager desde la terminal?
+Vite escucha en `0.0.0.0`, por lo que Codespaces puede detectar y reenviar automáticamente el puerto `5173`.
 
-### Ejecutar la demo original de escenarios
+## Usar CinemaSeat desde la consola
 
-Muestra los escenarios de sala vacía, parcialmente ocupada, casi llena y completa:
+La interfaz web no reemplaza los comandos de consola.
+
+### Demo de escenarios
+
+Muestra salas vacías, parcialmente ocupadas, casi llenas y completas:
 
 ```bash
 npm run console
 ```
 
-### Ejecutar la consola interactiva
+### Consola interactiva
 
-Inicia una sesión interactiva de reservas:
+Inicia una sesión de reservas en la terminal:
 
 ```bash
 npm run console:interactive
 ```
 
-Ingresa una fila del 1 al 8 y un asiento del 1 al 10. El mapa de la sala aparece antes y después de cada intento de reserva. También puedes escribir `status` para ver los conteos de asientos ocupados y libres, `buscar2AsientosContiguos` para buscar el primer par horizontal disponible o `salir` para terminar la sesión.
+Ingresa una fila del 1 al 8 y un asiento del 1 al 10. Escribe `status` para ver los conteos, `buscar2AsientosContiguos` para localizar el primer par horizontal disponible o `salir` para terminar.
 
-### Ejecutar las pruebas automatizadas
+## Pruebas y compilación
 
-Ejecuta las pruebas unitarias con:
+Ejecuta las pruebas automatizadas:
 
 ```bash
 npm test -- --run
 ```
 
-## Donde escribo mi codigo?
+Valida TypeScript:
 
-Depende del lenguaje:
+```bash
+npm run typecheck
+```
 
-- `./src/main.ts` para la logica en TypeScript.
-- `./src/style.css` para estilos (Tailwind CSS v4 ya viene importado).
-- `./index.html` para el HTML base.
+Genera la versión de producción y sírvela localmente para revisarla:
 
-Puedes agregar mas archivos cuando quieras, solo asegúrate de importarlos desde `main.ts`.
+```bash
+npm run build
+npm run preview
+```
 
-Nota: si puedes ver la tarjeta de "Hello Rigo" y el mensaje "If you can see this, Tailwind is working.", entonces Tailwind esta configurado correctamente.
+## Estructura principal
 
-## Solucion de problemas
+- `index.html` y `src/webMain.ts`: página y entrada de la aplicación web.
+- `src/webApp.ts`: interacción del mapa y actualización de la interfaz.
+- `src/seatManager.ts`: matriz y operaciones de dominio compartidas por web y consola.
+- `src/webReservations.ts`: estado de sala y almacenamiento de sesión.
+- `src/webSeatMap.ts`: renderizado y etiquetas accesibles de los asientos.
+- `src/style.css`: tema oscuro y estilos adaptables; Tailwind CSS v4 está configurado.
 
-### No veo mis cambios...
+## Solución de problemas
 
-Cada vez que cambias cualquier archivo dentro de `./src`, el sitio se refresca automaticamente (hot reload).
+### Los cambios no aparecen
 
-Si aun no ves cambios, recarga limpiando cache:
+Los cambios en `src/` deberían reflejarse automáticamente. Si no aparecen, recarga la página limpiando la caché:
 
-- Mac: `Cmd + Shift + R`
+- macOS: `Cmd + Shift + R`
 - Windows/Linux: `Ctrl + Shift + R`
-
-## Como incluyo mas imagenes en mi proyecto?
-
-Agregalas dentro de `./public` y referencialas en HTML con `/nombre-imagen.ext`.
-
-Ejemplo:
-
-```html
-<img src="/rigo-baby.jpg" alt="Rigo" />
-```
-
-## Como incluyo mas archivos TypeScript?
-
-Agrega archivos en `./src` e importalos desde `main.ts`.
-
-Ejemplo:
-
-```ts
-import { myVar } from "./file2";
-```
-
-## Como publico el sitio?
-
-Este boilerplate es compatible con Vercel en un solo paso.
 
 ## Contribuidores
 
-Esta plantilla fue creada como parte del [Coding Bootcamp de 4Geeks Academy](https://4geeksacademy.com/us/coding-bootcamp) por [ehiber](https://github.com/ehiber) y otros contribuidores. Conoce mas sobre nuestro [AI Engineering Course](https://4geeksacademy.com/us/coding-bootcamps/ai-engineering), [Full Stack Developer Course](https://4geeksacademy.com/us/coding-bootcamps/part-time-full-stack-developer), y [Data Science Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning).
+Este proyecto parte de la plantilla creada como parte del [Coding Bootcamp de 4Geeks Academy](https://4geeksacademy.com/us/coding-bootcamp) por [ehiber](https://github.com/ehiber) y otros contribuidores. Conoce más sobre nuestro [AI Engineering Course](https://4geeksacademy.com/us/coding-bootcamps/ai-engineering), [Full Stack Developer Course](https://4geeksacademy.com/us/coding-bootcamps/part-time-full-stack-developer), y [Data Science Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning).
 
-Puedes encontrar otras plantillas y recursos como este en la [pagina de GitHub de la escuela](https://github.com/4geeksacademy/).
+Puedes encontrar otras plantillas y recursos en la [página de GitHub de la escuela](https://github.com/4geeksacademy/).

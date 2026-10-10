@@ -1,26 +1,76 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello World with Typescript</title>
+    <meta name="theme-color" content="#101210" />
+    <title>Sala 01 | CineSeat</title>
   </head>
-  <body class="min-h-screen bg-slate-100 text-slate-900">
-    <main class="mx-auto flex min-h-screen max-w-2xl flex-col items-center justify-center gap-6 p-6">
-      <h1 class="text-4xl font-bold tracking-tight">Hello World with Typescript</h1>
+  <body>
+    <header class="topbar">
+      <a class="wordmark" href="#main-content" aria-label="CineSeat, sala 01">
+        <span class="wordmark__mark" aria-hidden="true">C</span>
+        <span>CineSeat</span>
+      </a>
+      <div class="topbar__room"><span class="live-dot" aria-hidden="true"></span>SALA 01</div>
+    </header>
 
-      <section class="w-full max-w-md overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-        <img
-          src="/rigo-baby.jpg"
-          alt="Hello Rigo"
-          class="h-64 w-full bg-slate-50 object-contain p-2"
-        />
-        <div class="p-5">
-          <h2 class="text-xl font-semibold text-slate-900">Hello Rigo</h2>
-          <p id="app" class="mt-2 text-sm text-slate-600"></p>
+    <main id="main-content" class="workspace">
+      <section class="room-panel" aria-labelledby="room-title">
+        <header class="room-panel__heading">
+          <div>
+            <p class="eyebrow">MAPA DE ASIENTOS</p>
+            <h1 id="room-title">Sala experimental</h1>
+          </div>
+          <span class="room-dimensions">8 FILAS <span aria-hidden="true">/</span> 10 ASIENTOS</span>
+        </header>
+
+        <div class="screen" aria-label="Pantalla de cine">PANTALLA</div>
+        <div class="seat-map-wrap">
+          <div id="column-labels" class="column-labels" aria-hidden="true"></div>
+          <div id="seat-map" class="seat-map" role="group" aria-label="Mapa de asientos"></div>
         </div>
+        <ul class="legend" aria-label="Leyenda de asientos">
+          <li><span class="legend__swatch legend__swatch--free" aria-hidden="true"></span>Libre</li>
+          <li><span class="legend__swatch legend__swatch--occupied" aria-hidden="true"></span>Ocupado</li>
+          <li><span class="legend__swatch legend__swatch--adjacent" aria-hidden="true"></span>Contiguo</li>
+        </ul>
       </section>
+
+      <aside class="control-panel" aria-label="Controles y estado de la sala">
+        <section class="status-panel" aria-labelledby="status-title">
+          <div class="panel-heading">
+            <p class="eyebrow">DISPONIBILIDAD</p>
+            <h2 id="status-title">Estado de la sala</h2>
+          </div>
+          <p id="room-status" class="room-status" aria-live="polite">Sala vacía</p>
+          <div class="seat-counts">
+            <div><span class="seat-counts__value" id="occupied-count">0</span><span>Ocupados</span></div>
+            <div><span class="seat-counts__value" id="available-count">80</span><span>Libres</span></div>
+          </div>
+        </section>
+
+        <section class="actions-panel" aria-labelledby="actions-title">
+          <div class="panel-heading">
+            <p class="eyebrow">ACCIONES</p>
+            <h2 id="actions-title">Asientos juntos</h2>
+          </div>
+          <button id="find-adjacent" class="search-button" type="button">
+            <span aria-hidden="true">⌕</span>Buscar primer par
+          </button>
+        </section>
+
+        <section class="message-panel" aria-labelledby="messages-title">
+          <div class="panel-heading">
+            <p class="eyebrow">ACTIVIDAD</p>
+            <h2 id="messages-title">Mensajes</h2>
+          </div>
+          <div id="message-window" class="message-window" role="status" aria-live="polite">
+            <p class="message-entry">Sala lista para reservar.</p>
+          </div>
+        </section>
+      </aside>
     </main>
-    <script type="module" src="/src/main.ts"></script>
+    <script type="module" src="/src/webMain.ts"></script>
   </body>
 </html>
