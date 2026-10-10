@@ -17,11 +17,11 @@ export async function runInteractiveReservations(
   let room = createEmptySeatMatrix();
 
   while (true) {
-    write("\n=== Mapa antes de la reserva ===");
+    write("\n=== Mapa de la sala de cine - Reservas ===");
     write(formatSeatMap(room));
 
     const rowInput = await ask(
-      "Fila (1-8), 'buscar2AsientosContiguos' o 'salir': "
+      "Fila (1-8), 'status', 'buscar2AsientosContiguos' o 'salir': "
     );
     if (isExitCommand(rowInput)) {
       return;
@@ -39,6 +39,20 @@ export async function runInteractiveReservations(
           write("No hay dos asientos contiguos disponibles.");
         }
       }
+      continue;
+    }
+
+    if (rowInput.trim().toLowerCase() === "status") {
+      const [occupiedSeats, availableSeats] = countSeats(room);
+      const roomStatus =
+        availableSeats === 0
+          ? "completa"
+          : occupiedSeats === 0
+            ? "vacia"
+            : "parcialmente ocupada";
+      write(
+        `Estado de la sala: ${roomStatus}. Ocupados: ${occupiedSeats} | Libres: ${availableSeats}.`
+      );
       continue;
     }
 
@@ -62,7 +76,7 @@ export async function runInteractiveReservations(
       );
     }
 
-    write("\n=== Mapa después de la reserva ===");
+    write("\n=== Mapa de la sala de cine - Reservas ===");
     write(formatSeatMap(room));
 
     const [, availableSeats] = countSeats(room);

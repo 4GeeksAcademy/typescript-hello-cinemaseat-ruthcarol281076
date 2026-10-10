@@ -4,6 +4,22 @@ import { runInteractiveReservations } from "./interactiveReservations";
 import { formatSeatMap } from "./seatMap";
 
 describe("runInteractiveReservations", () => {
+  it("shows the room status when requested and continues the session", async () => {
+    const answers = ["2", "3", "status", "salir"];
+    const output: string[] = [];
+
+    await runInteractiveReservations(
+      async () => answers.shift() ?? "salir",
+      (message) => output.push(message)
+    );
+
+    expect(output).toContain(
+      "Estado de la sala: parcialmente ocupada. Ocupados: 1 | Libres: 79."
+    );
+    expect(output).toContain("\n=== Mapa de la sala de cine - Reservas ===");
+    expect(answers).toEqual([]);
+  });
+
   it("shows the map before and after successful and rejected reservations", async () => {
     const answers = ["4", "5", "4", "5", "salir"];
     const prompts: string[] = [];
@@ -21,17 +37,17 @@ describe("runInteractiveReservations", () => {
     );
 
     expect(output).toEqual([
-      "\n=== Mapa antes de la reserva ===",
+      "\n=== Mapa de la sala de cine - Reservas ===",
       emptyMap,
       "Reserva confirmada: fila 4, asiento 5.",
-      "\n=== Mapa después de la reserva ===",
+      "\n=== Mapa de la sala de cine - Reservas ===",
       reservedMap,
-      "\n=== Mapa antes de la reserva ===",
+      "\n=== Mapa de la sala de cine - Reservas ===",
       reservedMap,
       "Reserva rechazada: el asiento ya esta ocupado.",
-      "\n=== Mapa después de la reserva ===",
+      "\n=== Mapa de la sala de cine - Reservas ===",
       reservedMap,
-      "\n=== Mapa antes de la reserva ===",
+      "\n=== Mapa de la sala de cine - Reservas ===",
       reservedMap
     ]);
     expect(prompts).toHaveLength(5);
@@ -48,12 +64,12 @@ describe("runInteractiveReservations", () => {
     );
 
     expect(output).toEqual([
-      "\n=== Mapa antes de la reserva ===",
+      "\n=== Mapa de la sala de cine - Reservas ===",
       emptyMap,
       "La fila debe estar entre 1 y 8 y el asiento entre 1 y 10. Intentalo de nuevo.",
-      "\n=== Mapa después de la reserva ===",
+      "\n=== Mapa de la sala de cine - Reservas ===",
       emptyMap,
-      "\n=== Mapa antes de la reserva ===",
+      "\n=== Mapa de la sala de cine - Reservas ===",
       emptyMap
     ]);
   });
