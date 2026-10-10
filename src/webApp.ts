@@ -13,6 +13,7 @@ import {
 } from "./webReservations";
 import { renderSeatMap } from "./webSeatMap";
 
+/** Busca un elemento del documento y falla con un mensaje si falta en el HTML. */
 function getElement<T extends HTMLElement>(root: Document, selector: string): T {
   const element = root.querySelector<T>(selector);
   if (!element) {
@@ -40,6 +41,7 @@ export function mountSeatManager(
   let room: SeatMatrix = loadSessionRoom(storage);
   let highlightedPair: AdjacentSeatPair | null = null;
 
+  /** Reemplaza el mensaje visible por el resultado de la última acción. */
   const writeMessage = (text: string): void => {
     const entry = root.createElement("p");
     entry.className = "message-entry";
@@ -47,6 +49,7 @@ export function mountSeatManager(
     messageWindow.replaceChildren(entry);
   };
 
+  /** Sincroniza el mapa, conteos y estado visual con la matriz actual. */
   const render = (): void => {
     renderSeatMap(room, seatMap, columnLabels, highlightedPair);
     const [occupied, available] = countSeats(room);
@@ -55,7 +58,8 @@ export function mountSeatManager(
     roomStatus.textContent = getRoomStatus(room);
   };
 
-  seatMap.addEventListener("click", (event) => {
+  /** Procesa el clic de un asiento, intenta reservarlo y actualiza la vista. */
+  const handleSeatClick = (event: MouseEvent): void => {
     const target = event.target;
     if (!(target instanceof root.defaultView!.HTMLButtonElement)) {
       return;
@@ -78,9 +82,10 @@ export function mountSeatManager(
       writeMessage("Las coordenadas del asiento no son válidas.");
     }
     render();
-  });
+  };
 
-  findAdjacentButton.addEventListener("click", () => {
+  /** Busca y resalta el primer par libre, o muestra que no existe ninguno. */
+  const handleAdjacentSearch = (): void => {
     highlightedPair = null;
     const pair = findFirstAdjacentAvailableSeats(room);
     if (pair) {
@@ -92,7 +97,10 @@ export function mountSeatManager(
       writeMessage("No hay dos asientos contiguos disponibles.");
     }
     render();
-  });
+  };
+
+  seatMap.addEventListener("click", handleSeatClick);
+  findAdjacentButton.addEventListener("click", handleAdjacentSearch);
 
   render();
 }

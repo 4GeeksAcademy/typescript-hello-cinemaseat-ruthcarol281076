@@ -32,6 +32,7 @@ export function getRoomStatus(matrix: SeatMatrix): RoomStatus {
   return "Parcialmente ocupada";
 }
 
+/** Comprueba que un valor tenga las dimensiones y los estados válidos de la sala. */
 function isSeatMatrix(value: unknown): value is SeatMatrix {
   return (
     Array.isArray(value) &&

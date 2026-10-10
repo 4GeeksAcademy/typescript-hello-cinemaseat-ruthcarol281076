@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { mountSeatManager } from "./webApp";
 import { SESSION_STORAGE_KEY } from "./webReservations";
 
+/** Crea el HTML mínimo de la sala y monta su controlador para una prueba. */
 function mountRoom(): void {
   document.body.innerHTML = `
     <div id="column-labels"></div>

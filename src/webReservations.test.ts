@@ -10,6 +10,7 @@ import {
 } from "./seatManager";
 import { getRoomStatus } from "./webReservations";
 
+/** Crea una sala ocupada salvo por las coordenadas que se indican como libres. */
 function createMatrixWithAvailableSeats(
   availablePositions: ReadonlyArray<SeatPosition>
 ): SeatMatrix {
