@@ -47,15 +47,33 @@ Usa este comando para validar solo TypeScript sin iniciar Vite:
 npm run typecheck
 ```
 
-## Como ejecuto `main.ts` desde la terminal?
+## Como ejecuto Cinema Seat Manager desde la terminal?
 
-Si quieres ejecutar `./src/main.ts` directamente y ver la salida de `console.log` en la terminal, usa:
+### Ejecutar la demo original de escenarios
+
+Muestra los escenarios de sala vacía, parcialmente ocupada, casi llena y completa:
 
 ```bash
 npm run console
 ```
 
-Este comando ya viene conectado por defecto a `./src/main.ts`.
+### Ejecutar la consola interactiva
+
+Inicia una sesión interactiva de reservas:
+
+```bash
+npm run console:interactive
+```
+
+Ingresa una fila del 1 al 8 y un asiento del 1 al 10. El mapa de la sala aparece antes y después de cada intento de reserva. También puedes escribir `status` para ver los conteos de asientos ocupados y libres, `buscar2AsientosContiguos` para buscar el primer par horizontal disponible o `salir` para terminar la sesión.
+
+### Ejecutar las pruebas automatizadas
+
+Ejecuta las pruebas unitarias con:
+
+```bash
+npm test -- --run
+```
 
 ## Donde escribo mi codigo?
 
