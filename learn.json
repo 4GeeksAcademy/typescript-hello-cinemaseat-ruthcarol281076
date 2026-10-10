@@ -1,0 +1,21 @@
+{
+  "autoPlay": false,
+  "title": {
+    "en": "Hello World with Typescript",
+    "es": "Hola Mundo con Typescript"
+  },
+  "slug": "typescript-hello",
+  "description": {
+    "en": "Starter template for Vite + TypeScript projects with Tailwind CSS v4 preconfigured.",
+    "es": "Plantilla inicial para proyectos con Vite + TypeScript con Tailwind CSS v4 preconfigurado."
+  },
+  "projectType": "template",
+  "difficulty": "beginner",
+  "technologies": [
+    "TypeScript",
+    "Vite",
+    "Tailwind CSS",
+    "HTML",
+    "CSS"
+  ]
+}
